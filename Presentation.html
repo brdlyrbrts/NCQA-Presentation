@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Optimizing the Electronic Medical Record: Evaluation of Word Embeddings for Chronic Pain Patient Notes</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Bradley Roberts" />
+    <meta name="date" content="2018-10-10" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Optimizing the Electronic Medical Record: Evaluation of Word Embeddings for Chronic Pain Patient Notes
+### Bradley Roberts
+### October 10, 2018
+
+---
+
+
+
+
+
+
+&lt;!-- # Background: Electronic Medical Record --&gt;
+
+&lt;!-- Great potential for improving all aspects of patient care including [1]: --&gt;
+
+&lt;!-- &lt;img src="images/BackgroundFigure.pdf" width="650" height = "100%"&gt; --&gt;
+
+&lt;!-- ??? --&gt;
+
+&lt;!-- - Safety --&gt;
+
+&lt;!--    - Effectiveness --&gt;
+
+&lt;!--    - Patient-centeredness --&gt;
+
+&lt;!--    - Communication --&gt;
+
+&lt;!--    - Education --&gt;
+
+&lt;!--    - Timeliness --&gt;
+
+&lt;!--    - Efficiency --&gt;
+
+&lt;!--    - Equity [1] --&gt;
+
+# Background: Lack of User-Centered Design
+
+The electronic format is not fully optimized for clinicians' workflow and has introduced several barriers:
+
+- Difficulty searching for patient data (McDonald et al., 2014)
+
+- Poor readability &amp; redundancy (Farri et al., 2012)
+
+- Reduced efficiency (Young et al., 2018)
+
+- Increased clerical burden &amp; increased risk of physician burnout (Shanafelt et al., 2016)
+
+&lt;br /&gt;
+
+&lt;font color=#fcc30f&gt;"The real art of medical diagnosis comes in seeing the connections between problems—something that was well-documented on paper, perhaps because we weren’t so exhausted from all the thunderous clicks that we still had the time and energy to actually think about the case and the context."&lt;/font&gt; 
+
+--Dr. Robert Wachter (2012)
+
+
+???
+
+- 2. Nearly 41% of internists reported that finding and reviewing medical record data took more overall time
+to perform using the electronic medical record (EMR) than before the use of electronic formats
+(McDonald et al., 2014). 
+
+- 4. In one study, it was found that primary care physicians (PCPs) spend
+more than one-half of their work day, nearly six hours, interacting with the EHR (Arndt et al.,
+2017).
+
+- Researchers also found the number of mouse clicks within the EMR commonly exceeds 400 times per hour for every 2.5 patients seen by the physician (Hill et al., 2013). Over the course of a day, a physician could easily register over 4,000 mouse clicks in an attempt to access or enter information for a patient visit. 
+
+---
+
+# Background: Communication &amp; Sharing
+
+&lt;br /&gt;
+
+.pull-left[
+&lt;font color=#fcc30f&gt;Problem:&lt;/font&gt;
+
+Natural language processing + artificial intelligence = difficult communication! 
+
+&lt;br /&gt;
+
+&lt;font color=#fcc30f&gt;Problem:&lt;/font&gt;
+
+Patients show a growing desire to read their note, but readability and low health literacy is a concern (White &amp; Danis, 2013)
+
+]
+.pull-right[
+&lt;font color=#fcc30f&gt;Solution:&lt;/font&gt; 
+
+Implement stakeholders in the earliest phases of predictive analytics development (Cohen et al., 2014)
+
+&lt;br /&gt;
+
+&lt;font color=#fcc30f&gt;Solution:&lt;/font&gt; 
+
+Automate the simplification of the note (Paetzold &amp; Specia, 2017)
+]
+
+???
+
+Include FDA device regulation?
+
+---
+
+# Purpose of Study
+
+Using chronic pain patient notes within the electronic medical record (EMR), the objectives of this study were to:
+
+&lt;font color=#fcc30f&gt;1.&lt;/font&gt; Evaluate word embeddings to determine an appropriate model that captures semantic (i.e., meaning) and syntactic (i.e., language) content of the patient note for downstream applications.  
+
+&lt;br /&gt;
+
+&lt;font color=#fcc30f&gt;2.&lt;/font&gt; Examine the current subject matter and structure of patient notes to discover the level of personalized information important to patient care. 
+
+&lt;br /&gt;
+
+&lt;font color=#fcc30f&gt;3.&lt;/font&gt; Identify ways that physicians could be incorporated into the process of artificial intelligence for health care.
+
+---
+
+# Methods: Sample
+
+- Secondary data analysis of patient notes between October 1, 2015 and March 31, 2018
+
+- Michigan Pain Consultants
+    - Interdisciplinary, outpatient pain management
+    
+    - 21 providers within six clinics
+    
+    - EMR: GE Centricity Practice Solutions 
+
+- Chronic pain patients 21 years and older with non-malignant chronic pain
+    - 29,990 patients (60.8% female, mean age: 59.7 years)
+    
+    - 197,731 patient notes
+    
+???
+    - Pain lasting more than three months
+    
+    - Other treatment strategies in primary care have failed
+    
+- Patients disbursed across six different pain management clinics in Michigan
+    - Michigan Pain Consultants
+    
+    - 14 providers specializing in interventional pain management
+
+---
+
+# Methods: Text Preprocessing
+
+#### Table 1. Text preprocessing for word embedding models
+
+&lt;img src="images/ano_table2.png" width="100%" height = "100%"&gt;
+
+---
+
+# Methods: Word Embeddings
+
+&lt;font color=#fcc30f&gt;
+You shall know a word by the company it keeps... (Firth, 1957)
+&lt;/font&gt;
+
+&lt;br /&gt;
+- At its core, a word embedding transforms words into numbers
+
+- First step (layer) in deep neural networks for downstream applications
+
+- Word embeddings are commonly divided between 
+    1. Co-occurrence models
+    
+    2. Prediction models
+    
+---
+
+# Methods: Word Embeddings
+
+1. Co-occurrence models
+    - Based on words frequently appearing together
+    
+    - Global Vectors &lt;font color=#fcc30f&gt;(GloVe)&lt;/font&gt;
+    
+2. Prediction models
+    - Predict context (i.e., surrounding) word or target word
+
+    - &lt;font color=#fcc30f&gt;Word2vec&lt;/font&gt; - word n-grams
+    
+    - &lt;font color=#fcc30f&gt;fastText&lt;/font&gt; - character n-grams + word n-grams
+
+---
+
+# Example of Co-occurrence Matrix:
+
+### I enjoy flying. I like NLP. I like deep learning.
+
+&lt;img src="images/cooccur.png" width="130%" height = "130%"&gt;
+
+---
+
+&lt;img src="images/ExampleFigure.png" width="700" height = "100%"&gt;
+
+---
+&lt;!-- # Methods: Word Embeddings --&gt;
+
+&lt;!-- Many parameters to consider for each of the models: --&gt;
+
+&lt;!-- - Dimension size (e.g., 50, 300, 1000) --&gt;
+
+&lt;!-- - Window size (e.g., 5, 8, 10) --&gt;
+
+&lt;!-- - Negative sampling (e.g., 5, 10) --&gt;
+
+&lt;!-- - Epochs (e.g., 10, 25, 50) --&gt;
+
+&lt;!-- - Skip-gram vs Continuous Bag of Words (CBOW) --&gt;
+
+&lt;!-- - Minimum word counts (e.g., 2, 5, 50) --&gt;
+
+&lt;!-- ??? --&gt;
+
+&lt;!-- - Dimension: how many numbers represent a word --&gt;
+&lt;!-- - Window size: how many words to consider to the left and right of a target word --&gt;
+&lt;!-- - Negative sampling: modifies just a small percentage of the weights instead of for all words --&gt;
+&lt;!-- - Epochs: iterations --&gt;
+
+&lt;!-- In the "skip-gram" mode alternative to "CBOW", rather than averaging the context words, each is used as a pairwise training example. That is, in place of one CBOW example such as [predict 'ate' from average('The', 'cat', 'the', 'mouse')], the network is presented with four skip-gram examples [predict 'ate' from 'The'], [predict 'ate' from 'cat'], [predict 'ate' from 'the'], [predict 'ate' from 'mouse']. (The same random window-reduction occurs, so half the time that would just be two examples, of the nearest words.) --&gt;
+
+&lt;!-- --- --&gt;
+
+# Methods: Word Embeddings
+
+#### Table 2. Parameters used for word embedding models
+
+&lt;img src="images/ano_table1.png" width="100%" height = "100%"&gt;
+
+&lt;font color=#fcc30f&gt;a)&lt;/font&gt; 100 and 300 were also tested; &lt;font color=#fcc30f&gt;b)&lt;/font&gt; 5 was also tested; &lt;font color=#fcc30f&gt;c)&lt;/font&gt; predict context words given target word
+ 
+???
+
+Based on a priori testing, the following parameters were chosen for each of the three models.
+
+- Dimension: how many numbers represent a word
+- Window size: how many words to consider to the left and right of a target word
+- Negative sampling: modifies just a small percentage of the weights instead of for all words
+- Epochs: iterations
+
+- Each model took between 20 minutes and 14 hours to run with over 30 models created. 
+- The models with the parameters above were retained for intrinsic and extrinsic evaluation.
+
+---
+
+# Methods: Intrinsic Evaluation
+
+&lt;font color=#fcc30f&gt;Semantic relatedness and similarity of words:&lt;/font&gt;
+
+1. Word similarity &amp; analogies (cosine similarity)
+    - king:queen::man:woman
+    
+    - perfect: perfection, perfectly, ideal, flawless, good, always
+    
+2. Word clustering
+    - t-distributed stochastic neighbor embedding (t-SNE) + principal components analysis (PCA)
+            
+    - k-Nearest Neighbors (kNN) with Louvain community detection
+
+3. Expert/Physician Review
+    - Interactive dashboard
+    
+???
+
+2. Word clustering (similar words in close proximity grouped together)
+    - t-distributed stochastic neighbor embedding (t-SNE) + principal components analysis (PCA)
+        - Collapses many dimensions (200) down to 2
+        
+    - k-nearest neighbors (KNN) with Louvain community detection (similar to network analysis)
+        - Groups similar words
+
+Interactive dashboard that includes both 1) and 2)
+
+---
+
+&lt;img src="images/collage.png" width="100%" height = "90%"&gt;
+
+---
+
+# Methods: Extrinsic Evaluation
+
+Extrinsic methods assess the impact of the system on specific task performance
+based on measures such as success rate, time-to-completion, and decision-making accuracy (Wang et al., 2018).
+
+&lt;br /&gt;
+
+- No good domain-specific (chronic pain), health care ontologies exist for evaluation 
+
+- Possible downstream application aim to simplify the patient note
+
+&lt;br /&gt;
+
+&lt;font color=#fcc30f&gt;Predict text readability (grade level) of the patient note utilizing the word embeddings.&lt;/font&gt;
+    
+---
+
+# Methods: Extrinsic Evaluation
+    
+- Three readability formulas:
+    1. &lt;font color=#fcc30f&gt;Flesch-Kincaid Grade:&lt;/font&gt; Average number of words per sentence, number of syllables per word
+    
+    2. &lt;font color=#fcc30f&gt;Gunning Fog Index:&lt;/font&gt; Average number of words per sentence, percentage of words with more than two syllables
+    
+    3. &lt;font color=#fcc30f&gt;SMOG Readability Formula:&lt;/font&gt; Number of words with more than two syllables
+    
+- Convolution neural network (CNN)
+    - Several configurations of hyperparameters (e.g., learning rate, dropout) were tested for optimization
+    
+    - Training: 70%; Validation: 30%; 
+    
+    - 150 epochs (i.e., iterations)
+
+---
+
+# Results: Exploratory Data Analysis
+
+&lt;br /&gt;
+
+- 127,898,136 tokens (i.e., words, concepts)
+
+- Unigrams: 39,337 (min = 5)
+  
+- Bigrams: 275,455 (min = 5)
+
+- Mean word count per patient note: 626 (IQR: 519-748)
+  
+- Range of mean word count by provider: 481 to 1001 words per patient note
+  
+---
+
+#### Figure 1. Most frequently occurring unigrams
+
+&lt;img src="images/unigram_color.png" width="650" height = "100%"&gt;
+
+---
+
+#### Figure 2. Most frequently occurring bigrams
+
+&lt;img src="images/bigram_color.png" width="650" height = "100%"&gt;
+
+---
+
+#### Figure 3. Mean word count by provider
+
+&lt;img src="images/provider_words.png" width="650" height = "90%"&gt;
+
+---
+
+#### Figure 4. Similarity of Patient Notes Among Providers
+
+&lt;img src="images/patient_note_similarity2.png" width="550" height = "90%"&gt;
+
+---
+
+#### Figure 5. Mean word count by provider type
+
+&lt;img src="images/provider_type_words.png" width="550" height = "60%"&gt;
+
+---
+
+# Results: Exploratory Data Analysis
+
+&lt;font color=#fcc30f&gt;Text collocation analysis:&lt;/font&gt; phrase detection based on some number of words that occur together often
+
+- Revealed the use of templates (and copy/paste) for patient notes
+  
+- 63,529,789 of the 72,033,968 (88.2%) phrases of 2-7 word length were part of larger phrases/sentences
+  
+- Possible tool for concept, diagnosis, co-morbidity, or diagnostic test detection:
+    - "facet signs positive on right"
+    
+    - "Tender cervical facets with side bending"
+    
+    - "Patrick's test positive"
+    
+    - "Today discussed opioid use"
+
+???
+
+- closer to 481 = structured notes
+- closer to 1001 = offered narrative text (Assessment in SOAP note)
+
+---
+
+# Results: Intrinsic Evaluation
+
+#### Table 3. Top five words most similar to spondylosis
+
+&lt;img src="images/sim1.png" width="800" height = "100%"&gt;
+
+---
+
+# Results: Intrinsic Evaluation
+
+#### Table 4. Top five words most similar to oxycodone
+
+&lt;img src="images/sim2.png" width="800" height = "100%"&gt;
+
+---
+
+# Results: Intrinsic Evaluation
+
+#### Table 5. Top five words most similar to l5 (5th lumbar) 
+
+&lt;img src="images/sim3.png" width="800" height = "100%"&gt;
+
+---
+
+# Results: Intrinsic Evaluation
+
+&lt;font color=#fcc30f&gt;bid:tid::two: ?&lt;/font&gt;
+
+&lt;img src="images/sim8_analogy.png" width="800" height = "80%"&gt;
+
+Numbers in parentheses represent the distance metric for measuring similarity (0-1)
+
+---
+
+#### Figure 6. Word2vec (200 dimensions) t-SNE and clustering
+
+&lt;img src="images/w2v2.png" width="700" height = "100%"&gt;
+
+---
+
+#### Figure 6. Word2vec (200 dimensions) t-SNE and clustering
+
+&lt;img src="images/w2v2_labels.png" width="700" height = "100%"&gt;
+
+---
+
+# Results: Intrinsic Evaluation - Physician Feedback
+
+- Five physicians gave feedback by using the Word Explorer dashboard
+  
+  - Three physicans favored Word2vec 200
+  
+  - One physician favored Word2vec 50 
+  
+  - One physician did not have a preference between fastText 50 and fastText 200
+  
+&lt;br /&gt;
+  
+&lt;font color=#fcc30f&gt;
+.center["Word2vec 50 seemed closest to my way of associating."]
+&lt;/font&gt;
+
+---
+
+&lt;!-- #### Figure 1. Word2vec (200 dimensions) t-SNE and clustering --&gt;
+
+&lt;!-- &lt;img src="images/w2v2_labels_zoom.pdf" width="60%" height = "100%"&gt; --&gt;
+
+&lt;!-- Zooming in on Medications and Diagnoses groups --&gt;
+
+&lt;!-- --- --&gt;
+
+#### Table 6. Groups as determined by clustering algorithm
+
+&lt;iframe src="images/Table1_new.html"
+        height="600" width="100%"
+        scrolling="yes" seamless="seamless"
+        frameBorder="0"&gt;
+&lt;/iframe&gt;
+
+???
+
+Values in () denote the number of groups after accounting for repetitive groupings.
+
+---
+
+# Results: Extrinsic Evaluation
+
+#### Table 7. Derived grades based on readability indices
+
+&lt;iframe src="images/Table3.html"
+        height="200" width="100%"
+        scrolling="no" seamless="seamless"
+        frameBorder="0"&gt;
+&lt;/iframe&gt;
+
+&lt;font color=#fcc30f&gt;*Patient notes and grades with fewer than 500 observations were removed prior to analysis.&lt;/font&gt;
+
+---
+
+# Results: Extrinsic Evaluation
+
+#### Table 8. Accuracy for predicting readability of patient note using convolution neural network
+
+&lt;iframe src="images/Table2.html"
+        height="300" width="100%"
+        scrolling="no" seamless="seamless"
+        frameBorder="0"&gt;
+&lt;/iframe&gt;
+
+.footnote[.red.bold[*] &lt;font color=#b91233&gt;Red&lt;/font&gt; denotes model with highest predictive accuracy; &lt;font color=#fcc30f&gt;yellow&lt;/font&gt; second highest predictive accuracy.]
+
+---
+
+# Results: Dashboard and Provider Feedback
+
+"I know the data in my notes specifically is quite limited as I am not telling too much of a story at all and am more concerned about efficiency, billing requirements for the data in my note, and the information is mostly from the premade templates."
+
+&lt;img src="images/CommentsFigure2.png" width="650" height = "100%"&gt;
+
+---
+
+# Conclusions: Choosing a Model
+
+&lt;br /&gt;
+
+- Word similarity better captured by smaller dimensional models [7]
+
+    - More separation between dissimilar words and clusters
+
+&lt;br /&gt;
+
+- Larger dimensional models more effective for complex, downstream tasks, i.e., prediction/classification
+
+    - Word2vec &amp; GloVe (200 dimensions) with highest predictive accuracy
+
+&lt;br /&gt;
+
+- No one-size-fits-all model?
+    
+???
+
+- No one-size-fits-all model?
+    - Misspellings, diverse range of content --&gt; dependent upon downstream tasks
+
+---
+
+# Conclusions: Choosing a Model
+
+&lt;br /&gt;
+
+- Word2vec 200 appears most robust
+
+&lt;br /&gt;
+
+- fastText 200 delivers useful tools (e.g., spellchecker)
+
+&lt;br /&gt;
+
+- GloVe 200 seemed to capture some personal level details
+
+&lt;br /&gt; 
+
+- Expert consensus: Word2vec 
+
+---
+
+# Conclusions &amp; Future Directions
+
+&lt;br /&gt;
+
+- Missing the &lt;font color=#fcc30f&gt;"A"&lt;/font&gt; in the SOAP note
+    - Physicians use templates and miss the narrative/story within the patient note
+    
+    - Large amount of phrase/sentence collocation
+
+&lt;br /&gt;
+
+&lt;font color=#fcc30f&gt;
+.center[How can the patient narrative be incorporated back into the electronic medical record?]
+&lt;/font&gt;
+
+---
+
+# Conclusions &amp; Future Directions
+
+&lt;br /&gt;
+
+- Continue to explore ways to incorporate stakeholders for AI applications
+
+&lt;font color=#fcc30f&gt;
+.center[What other methods can be used?]
+&lt;/font&gt;
+    
+&lt;br /&gt;
+
+- User-centered design, sharing the patient note, and readability
+    - Automated text generation/summarization (physician)
+    
+    - Automated text simplification (patient)
+
+&lt;font color=#fcc30f&gt;  
+.center[Deep neural networks and bolt-on software for EMR...]
+&lt;/font&gt;
+
+---
+
+# Strengths &amp; Limitations
+
+.pull-left[
+&lt;font color=#fcc30f&gt;Strengths:&lt;/font&gt; 
+- Domain-specific
+
+- Large dataset for patient notes
+
+- State-of-the-art word embeddings
+
+- First attempt of this nature to open up the "black box"
+]
+
+.pull-right[
+&lt;font color=#fcc30f&gt;Limitations:&lt;/font&gt;
+- Practice-specific?
+
+- Different software vendors = different functionality
+
+- Word embeddings: hyperparameter selection an active area of research
+
+- No ontology or gold standard for extrinsic evaluation
+]
+
+???
+    - Physicians reluctant at first
+    
+    - After accessing the dashboard, they were very responsive and excited
+    
+---
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+&lt;img src="images/Questions.png" width="140%" height = "150%"&gt;
+
+---
+
+# References
+
+McDonald, C., Callaghan, F., Weissman, A., Goodwin, R., Mundkur, M., &amp; Kuhn, T. (2014). Use of Internist's Free Time by Ambulatory Care Electronic Medical Record Systems. JAMA Internal Medicine, 174(11), p.1860.
+
+Farri, O., Pieckiewicz, D. S., Rahman, A. S., Adam, T. J., Pakhomov, S. V., &amp; Melton, G.
+B. (2012). A qualitative analysis of EHR clinical document synthesis by clinicians. AMIA ... Annual Symposium proceedings / AMIA Symposium. AMIA Symposium, 2012, 1211- 1220.     
+
+Young, R., Burge, S., Kumar, K., Wilson, J. &amp; Ortiz, D. (2018). A Time-Motion Study of Primary Care Physicians’ Work in the Electronic Health Record Era. Family Medicine, 50(2), pp.91-99.
+
+Shanafelt, T., Dyrbye, L., Sinsky, C., Hasan, O., Satele, D., Sloan, J., &amp; West, C. (2016). Relationship Between Clerical Burden and Characteristics of the Electronic Environment With Physician Burnout and Professional Satisfaction. Mayo Clinic Proceedings, 91(7), pp.836-848.
+
+---
+
+# References
+
+Cohen, I. G., Amarasingham, R., Shah, A., Xie, B., &amp; Lo, B. (2014). The legal and ethical
+concerns that arise from using complex predictive analytics in health care. Health Affairs
+(Project Hope), 33(7), 1139–1147. https://doi.org/10.1377/hlthaff.2014.0048
+
+White, A., &amp; Danis, M. (2013). Enhancing patient-centered communication and collaboration by using the electronic health record in the examination room. JAMA, 309(22), 2327–2328. https://doi.org/10.1001/jama.2013.6030
+
+Paetzold, G.H., &amp; Specia, L. (2017). Lexical simplification with neural ranking. In EACL, pp.34-40.
+
+Firth, J.R. (1957). A synopsis of linguistic theory 1930–1955. In Studies in Linguistic Analysis, pp. 1–32. Blackwell, Oxford. 
+
+Mikolov, T., Sutskever, I., Chen, K., Corrado, G.S., &amp; Dean, J. (2013). Distributed Representations of Words and Phrases and their Compositionality. CoRR, abs/1310.4546. Retrieved from https://arxiv.org/abs/1310.4546.
+
+---
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+&lt;br /&gt;
+
+# &lt;a href="http://www.statimpact.org/WordExplorer"&gt;Word Explorer&lt;/a&gt;
+
+---
+
+#### Figure 7. Word2vec (50 dimensions) t-SNE and clustering
+
+&lt;img src="images/w2v1.png" width="700" height = "100%"&gt;
+
+---
+
+#### Figure 8. fastText (50 dimensions) t-SNE and clustering
+
+&lt;img src="images/ft1.png" width="700" height = "100%"&gt;
+
+---
+
+#### Figure 9. fastText (200 dimensions) t-SNE and clustering
+
+&lt;img src="images/ft2.png" width="700" height = "100%"&gt;
+
+---
+
+#### Figure 10. GloVe (50 dimensions) t-SNE and clustering
+
+&lt;img src="images/gl1.png" width="700" height = "100%"&gt;
+
+---
+
+#### Figure 11. GloVe (200 dimensions) t-SNE and clustering
+
+&lt;img src="images/gl2.png" width="700" height = "100%"&gt;
+
+---
+
+Example of Convolution Neural Networks
+
+&lt;img src="images/example_cnn.png" width="650" height = "100%"&gt;
+
+&lt;!-- .footnote[Example of Convolution Neural Networks] --&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
